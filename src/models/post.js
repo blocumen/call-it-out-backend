@@ -25,6 +25,11 @@ userId: {
     type : ObjectId,
     ref  : "Rating"
    }],
+   moderatedBy:[{
+    type : ObjectId,
+    ref  : "User"
+  }],
+  
   status: {
     type: String,
     default: 'active' //Status to be active for post which are currently screening out inactive which are already done and postpone which needs to be done in future

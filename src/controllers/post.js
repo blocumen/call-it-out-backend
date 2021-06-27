@@ -95,6 +95,39 @@ module.exports = {
       });
     }
   },
+  getAllPendingPost: async (req, res) => {
+    try {
+      let allPosts;
+      let pendingPost;
+      if(req.query.moderator){
+        allPosts = await Post.find({});
+       for (let i = 0; i < allPosts.length; i++) {
+          let moderators = allPosts.moderateratedBy;
+          let index = moderators.indexOf(req.query.moderatorId);
+          if (index == -1) {
+            pendingPost.push(allPosts[i]);
+          }
+        }
+      }
+      if(req.query.user){
+        allPosts = await Post.find({userId : req.query.userId});
+        for (let i = 0; i < allPosts.length; i++) {
+          let moderators = allPosts.moderateratedBy;
+         
+          if (moderators == []) {
+            pendingPost.push(allPosts[i]);
+          }
+        }
+      }
+     
+      res.json({
+        status: true,
+        pendingPost: pendingPost,
+      });
+    } catch (err) {
+      res.json({ status: false, error: err });
+    }
+  },
 
   createTweetPost: async (req, res) => {
     try {
