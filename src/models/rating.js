@@ -18,6 +18,15 @@ const ratingSchema = new mongoose.Schema({
       type : String,
       default : null
   },
+  reportDescription: {
+    type: String,
+  },
+  reportLinkProof: {
+    type: String,
+  },
+  reportAttachProof: {
+    type: String,
+  },
   status: {
     type: String,
     default: 'active'

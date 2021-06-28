@@ -83,8 +83,19 @@ module.exports = {
   getAllPostsUser: async (req, res) => {
     try {
       let userId = req.params.userId;
-      let allPost = await Post.find({ userId: userId });
-      return res.json({
+      let allPost;
+      if (req.query.all) {
+        allPost = await Post.find({ userId: userId });
+      } else if (req.query.correct) {
+        allPost = await Post.find({
+          $and: [{ userId: userId }, { result: "negative" }],
+        });
+      } else if (req.query.wrong) {
+        allPost = await Post.find({
+          $and: [{ userId: userId }, { result: "positive" }],
+        });
+      }
+     return res.json({
         status: true,
         posts: allPost,
       });
@@ -102,7 +113,7 @@ module.exports = {
       if(req.query.moderator){
         allPosts = await Post.find({});
        for (let i = 0; i < allPosts.length; i++) {
-          let moderators = allPosts.moderateratedBy;
+          let moderators = allPosts.moderatedBy;
           let index = moderators.indexOf(req.query.moderatorId);
           if (index == -1) {
             pendingPost.push(allPosts[i]);
@@ -112,7 +123,7 @@ module.exports = {
       if(req.query.user){
         allPosts = await Post.find({userId : req.query.userId});
         for (let i = 0; i < allPosts.length; i++) {
-          let moderators = allPosts.moderateratedBy;
+          let moderators = allPosts.moderatedBy;
          
           if (moderators == []) {
             pendingPost.push(allPosts[i]);
@@ -187,7 +198,7 @@ module.exports = {
       // })
       let ratingData = await new Rating(req.body);
       console.log("ratingData : ", ratingData);
-      ratingData.ratedBy = req.user._id;
+      ratingData.ratedBy = req.query.moderatorId;
       console.log("saving data");
       let saveRating = await ratingData.save();
       console.log("saving data done");
@@ -195,7 +206,7 @@ module.exports = {
         console.log("saveRating : ", saveRating);
         var postUpdate = await Post.findOneAndUpdate(
           { _id: req.body.postId },
-          { $push: { ratings: saveRating._id } }
+          { $push: { ratings: saveRating._id,moderatedBy : req.query.moderatorId } }
         );
         console.log("save rating data : done");
       }
