@@ -21,6 +21,12 @@ userId: {
   twitterHandle : {
        type : String
   },
+  reason : {
+    type : String
+  },
+  proofLink : {
+    type : String
+  },
    ratings : [{
     type : ObjectId,
     ref  : "Rating"
