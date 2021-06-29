@@ -35,7 +35,7 @@ module.exports = {
   getPostByTweetId: async (req, res) => {
     //new
     try {
-      let tweetId = req.params.id;
+      let tweetId = req.params.tweetId;
       let post = await Post.findById({
         tweetId: tweetId,
       });
@@ -88,11 +88,11 @@ module.exports = {
         allPost = await Post.find({ userId: userId });
       } else if (req.query.correct) {
         allPost = await Post.find({
-          $and: [{ userId: userId }, { result: "negative" }],
+          $and: [{ userId: userId }, { result: "negativeStatus" }],
         });
       } else if (req.query.wrong) {
         allPost = await Post.find({
-          $and: [{ userId: userId }, { result: "positive" }],
+          $and: [{ userId: userId }, { result: "positiveStatus" }],
         });
       }
      return res.json({
