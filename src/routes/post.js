@@ -10,6 +10,7 @@ router.get("/getPostByTwitterId/:tweetId",postController.getPostByTweetId); //Ne
 router.get("/getAllPostsModerator",postController.getAllPostsModerator); //New
 router.get("/getAllPostsUser/:userId",postController.getAllPostsUser); //New
 router.get("/dashboardPostPending",postController.getAllPendingPost); // New
+router.get("/getHandleReputation",postController.getHandleReputation); //New
 router.post("/createPostTweet" , postController.createTweetPost);
 router.get("/getUser",requireSignin,postController.getUser);
 router.post("/giveRating",requireSignin,postController.giveRating);

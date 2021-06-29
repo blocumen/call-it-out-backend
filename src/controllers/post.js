@@ -88,11 +88,11 @@ module.exports = {
         allPost = await Post.find({ userId: userId });
       } else if (req.query.correct) {
         allPost = await Post.find({
-          $and: [{ userId: userId }, { result: "negativeStatus" }],
+          $and: [{ userId: userId }, { result: "negativeStatus" }]
         });
       } else if (req.query.wrong) {
         allPost = await Post.find({
-          $and: [{ userId: userId }, { result: "positiveStatus" }],
+          $and: [{ userId: userId }, { result: "positiveStatus" }]
         });
       }
      return res.json({
@@ -138,6 +138,31 @@ module.exports = {
     } catch (err) {
       res.json({ status: false, error: err });
     }
+  },
+
+  getHandleReputation : async (req,res) => {
+  try{
+    let getAllTweets = await Post.find(  {$and: [{ result: "negativeStatus" }, { result: "positiveStatus" }]}).count();
+   let getAllHandleNames =  await Post.distinct('twitterHandle');
+   let holder = {};
+   for(let i=0;i<getAllHandleNames.length;i++){
+     let getPositiveTweets = await Post.find(  {$and: [{ twitterHandle: getAllHandleNames[i] }, { result: "positiveStatus" }]}).count();
+     let ratio = (getPositiveTweets/getAllTweets)*100;
+     if(!holder[getAllHandleNames[i]]){
+       holder[getAllHandleNames[i]] = ratio;
+     }
+   }
+   res.json({
+     status : true,
+     data : holder
+   })
+  
+  }catch(err){
+    res.json({
+      status : false,
+      error : err
+    })
+  }
   },
 
   createTweetPost: async (req, res) => {
