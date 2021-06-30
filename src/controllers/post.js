@@ -165,7 +165,7 @@ module.exports = {
   }
   },
 
-  getReputationPointsOfModerator : () => {
+  getReputationPointsOfModerator : async (req, res) => {
   try{
      let moderatorId =  req.params.moderatorId;
      let ratings =  await Rating.find({ratedBy :  moderatorId});
