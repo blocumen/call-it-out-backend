@@ -4,31 +4,31 @@ const {toBech32Address, fromBech32Address} = require('@zilliqa-js/crypto');
 
 //You can set the value of the following variables according to your liking
 let contractAddress = ""; // 
-let recipientAddress =  ''; // sendingAddress;
-let sendingAmount = ''; // sendingAmount;
 let privkey = ""; 
 const zilliqa = new Zilliqa('https://dev-api.zilliqa.com');
 
 const myGasPrice = units.toQa('2000', units.Units.Li); // Gas Price that will be used by all transactions
 contractAddress = contractAddress.substring(2);
-recipientAddress = fromBech32Address(recipientAddress); //converting to ByStr20 format
 const ftAddr = toBech32Address(contractAddress);
-
-
 const contract = zilliqa.contracts.at(ftAddr);
 
 
-async function getState() {
+async function getState(address) {
     try {
-        let state = await contract.getState();
-        console.log("state : ", state);
+        if (!address) throw new Error('Invalid parameter');
+        const balance = await contract.getState(address);
+        return balance;
     } catch (err) {
-        console.log(err);
+        console.log(err.message);
+        return err.message;
     }
 }
 
-async function transfer() {
+async function transfer(recipientAddress, sendingAmount) {
     try {
+        if (!recipientAddress) throw new Error('Invalid parameter');
+        if (!sendingAmount) throw new Error('Invalid parameter');
+        recipientAddress = fromBech32Address(recipientAddress); //converting to ByStr20 format
         const callTx = await contract.call(
             'Transfer',
             [
@@ -52,12 +52,13 @@ async function transfer() {
             }
         );
         console.log("transfer : ", callTx);
-    
+        return callTx;    
     } catch (err) {
-        console.log(err);
+        console.log(err.message);
+        return err.message;
     }
     
 }
 
-getState();
-transfer();
+exports.getState = getState;
+exports.transfer = transfer;
