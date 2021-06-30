@@ -165,6 +165,29 @@ module.exports = {
   }
   },
 
+  getReputationPointsOfModerator : () => {
+  try{
+     let moderatorId =  req.params.moderatorId;
+     let ratings =  await Rating.find({ratedBy :  moderatorId});
+     let getPostDetails;
+     for(let i=0;i<ratings.length;i++){
+       let postDetails =  await Post.find({_id : ratings[i].postId});
+       if((ratings[i].ratingType == 'positive' && postDetails[0].result == 'positiveStatus') || (ratings[i].ratingType == 'negative' && postDetails[0].result == 'negativeStatus')){
+        getPostDetails.push(postDetails[0]);
+       }
+     }
+     res.json({
+       status : true,
+       data : getPostDetails
+     })
+  }catch(err){
+    res.json({
+      status : false,
+      error :err
+    })
+  }
+  },
+
   createTweetPost: async (req, res) => {
     try {
       let obj = JSON.parse(JSON.stringify(req.body));
