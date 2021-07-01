@@ -112,7 +112,7 @@ module.exports = {
       let pendingPost = [];
       console.log(req.query)
       if(req.query.moderator == "true"){
-        allPosts = await Post.find({});
+        allPosts = await Post.find({}).sort({"bounty":-1});
        for (let i = 0; i < allPosts.length; i++) {
           let moderators = allPosts[i].moderatedBy;
           console.log(moderators)
@@ -123,7 +123,7 @@ module.exports = {
         }
       }
       if(req.query.user == "true"){
-        allPosts = await Post.find({userId : req.query.userId});
+        allPosts = await Post.find({userId : req.query.userId}).sort({"bounty":-1});
         for (let i = 0; i < allPosts.length; i++) {
           let moderators = allPosts.moderatedBy;
          

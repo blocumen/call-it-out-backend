@@ -24,6 +24,10 @@ userId: {
   reason : {
     type : String
   },
+  bounty : {
+    type : Number,
+    default : 0
+  },
   proofLink : {
     type : String
   },
