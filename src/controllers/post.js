@@ -36,7 +36,7 @@ module.exports = {
     //new
     try {
       let tweetId = req.params.tweetId;
-      let post = await Post.findById({
+      let post = await Post.find({
         tweetId: tweetId,
       });
       if (post) {
@@ -84,7 +84,7 @@ module.exports = {
     try {
       let userId = req.params.userId;
       let allPost;
-      if (req.query.all) {
+      if (req.query.all == "true") {
         allPost = await Post.find({ userId: userId });
       } else if (req.query.correct) {
         allPost = await Post.find({
@@ -109,18 +109,20 @@ module.exports = {
   getAllPendingPost: async (req, res) => {
     try {
       let allPosts;
-      let pendingPost;
-      if(req.query.moderator){
+      let pendingPost = [];
+      console.log(req.query)
+      if(req.query.moderator == "true"){
         allPosts = await Post.find({});
        for (let i = 0; i < allPosts.length; i++) {
-          let moderators = allPosts.moderatedBy;
+          let moderators = allPosts[i].moderatedBy;
+          console.log(moderators)
           let index = moderators.indexOf(req.query.moderatorId);
           if (index == -1) {
             pendingPost.push(allPosts[i]);
           }
         }
       }
-      if(req.query.user){
+      if(req.query.user == "true"){
         allPosts = await Post.find({userId : req.query.userId});
         for (let i = 0; i < allPosts.length; i++) {
           let moderators = allPosts.moderatedBy;

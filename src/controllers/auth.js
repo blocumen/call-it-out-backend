@@ -4,7 +4,7 @@ const expressJwt = require("express-jwt");
 require("dotenv").config();
 
 const User = require("../models/user");
-const oauthCallback=process.env.FRONTEND_URL || 'https://new-zebra-42.loca.lt';
+const oauthCallback=process.env.FRONTEND_URL || 'https://caio-dashboard.netlify.app/login';
 const oauth = require('../lib/oauth-promise')(oauthCallback);
 const COOKIE_NAME = 'oauth_token';
 let tokens = {};
