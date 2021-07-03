@@ -14,7 +14,7 @@ router.get("/getHandleReputation",postController.getHandleReputation); //New
 router.get("/getReputationPointsOfModerator/:moderatorId",postController.getReputationPointsOfModerator); //New
 router.post("/createPostTweet" , postController.createTweetPost);
 router.get("/getUser",requireSignin,postController.getUser);
-router.post("/giveRating",requireSignin,postController.giveRating);//New
+router.post("/giveRating",postController.giveRating);//New
 
 
 

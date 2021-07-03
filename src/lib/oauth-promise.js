@@ -24,7 +24,7 @@ module.exports = (oauthCallback) => {
             console.log(error);
             reject(error);  
           } else {
-           
+           console.log(oauth_token , oauth_token_secret, results)
             resolve({oauth_token, oauth_token_secret, results});  
           }
         });
