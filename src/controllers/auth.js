@@ -4,7 +4,7 @@ const expressJwt = require("express-jwt");
 require("dotenv").config();
 
 const User = require("../models/user");
-const oauthCallback=process.env.FRONTEND_URL || 'https://caio-dashboard.netlify.app/login';
+const oauthCallback=process.env.FRONTEND_URL || 'https://splendid-elephant-33.loca.lt';
 const oauth = require('../lib/oauth-promise')(oauthCallback);
 const COOKIE_NAME = 'oauth_token';
 let tokens = {};
@@ -85,12 +85,16 @@ module.exports = {
   getTwitterRequestOathToken: async (req,res) =>{
     console.log("hey");
     const {oauth_token, oauth_token_secret} = await oauth.getOAuthRequestToken();
+    console.log(oauth_token_secret, "88")
+    var anshul_token = oauth_token;
   console.log("hey dere");
+  console.log(oauth_token, "90")
+
     res.cookie(COOKIE_NAME, oauth_token , {
       maxAge: 15 * 60 * 1000, // 15 minutes
-      secure: true,
-      httpOnly: true,
-      sameSite: true,
+      // secure: true,
+      httpOnly: false,
+      // sameSite: true,
     });
     
     tokens[oauth_token] = { oauth_token_secret };
@@ -99,17 +103,21 @@ module.exports = {
 
   getTwitterAccessOathToken: async (req,res)=>{
  
+    console.log(req.body, "104")
+    console.log(req.cookies[COOKIE_NAME], "105")
+    console.log(tokens, "106")
+
     try {
       const {oauth_token: req_oauth_token, oauth_verifier} = req.body;
       const oauth_token = req.cookies[COOKIE_NAME];
+      console.log(req.cookies[COOKIE_NAME])
       const oauth_token_secret = tokens[oauth_token].oauth_token_secret;
-      
+      console.log(anshul_token,oauth_token_secret,oauth_verifier, "112")
       if (oauth_token !== req_oauth_token) {
         res.status(403).json({message: "Request tokens do not match"});
         return;
       }
-      
-      const {oauth_access_token, oauth_access_token_secret} = await oauth.getOAuthAccessToken(oauth_token, oauth_token_secret, oauth_verifier);
+      const {oauth_access_token, oauth_access_token_secret} = await oauth.getOAuthAccessToken(anshul_token, oauth_token_secret, oauth_verifier);
       tokens[oauth_token] = { ...tokens[oauth_token], oauth_access_token, oauth_access_token_secret };
       res.json({success: true});
       
