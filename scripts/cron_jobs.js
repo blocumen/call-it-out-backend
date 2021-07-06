@@ -2,9 +2,7 @@ const User = require("../src/models/user");
 const Post = require("../src/models/post");
 const moment = require("../node_modules/moment");
 const Rating = require("../src/models/rating");
-const { raiseReputation } = require("../helper/repuationContract");
 
-const { transferAion } = require("../helper/transferAion");
 const { transfer } = require("../interaction/fungibleToken");
 const {increaseReputation} = require('../interaction/reputations');
 
