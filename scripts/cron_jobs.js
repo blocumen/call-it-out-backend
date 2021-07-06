@@ -3,8 +3,10 @@ const Post = require("../src/models/post");
 const moment = require("../node_modules/moment");
 const Rating = require("../src/models/rating");
 const { raiseReputation } = require("../helper/repuationContract");
+
 const { transferAion } = require("../helper/transferAion");
 const { transfer } = require("../interaction/fungibleToken");
+const {increaseReputation} = require('../interaction/reputations');
 
 module.exports = {
   giveReputationToUser: async () => {
@@ -68,19 +70,19 @@ module.exports = {
 
 const payAndIncreaseReputation = async (userList) => {
   let publicKey =
-    "0xa073eb74573e892d5cde20b3bf84f406a41cc669e012678452d00e7f0a06546d";
+    "zil1wpj09q84qy09jlksvvu4jphwakftlj3nspm5zd";
   for (let k = 0; k < userList.length; k++) {
-    // let user = await User.findById({ _id: userList[k] });
-    // let userPoints = user.reputationPoints;
-    // let newPoints = userPoints + 100;
-    // let updateUser = await User.updateOne(
-    //   { _id: userList[k] },
-    //   { $set: { reputationPoints: newPoints } }
-    // );
-    // console.log(updateUser);
-    // let transaction = await raiseReputation(user.publicKey);
-    // console.log(user.publicKey);
-    // console.log("transactionnnnnnnnnn :", transaction);
+    let user = await User.findById({ _id: userList[k] });
+    let userPoints = user.reputationPoints;
+    let newPoints = userPoints + 100;
+    let updateUser = await User.updateOne(
+      { _id: userList[k] },
+      { $set: { reputationPoints: newPoints } }
+    );
+    console.log(updateUser);
+    let transaction = await increaseReputation(user.publicKey,100);
+    console.log(user.publicKey);
+    console.log("transactionnnnnnnnnn :", transaction);
     await transfer("zil1wpj09q84qy09jlksvvu4jphwakftlj3nspm5zd", 1000000000000);
   }
 };
