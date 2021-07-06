@@ -39,14 +39,14 @@ async function getState(address) {
   }
 }
 
-async function transfer(recipientAddress, sendingAmount, nonBechAddress) {
+async function transfer(recipientAddress, sendingAmount) {
   try {
     recipientAddress = fromBech32Address(recipientAddress); //converting to ByStr20 format
-    console.log('tobech address: ', toBech32Address(nonBechAddress));
-    const convertedBechAddress = toBech32Address(nonBechAddress);
-    console.log('convertedBechAddress : ', convertedBechAddress);
+  //  console.log('tobech address: ', toBech32Address(nonBechAddress));
+  //  const convertedBechAddress = toBech32Address(nonBechAddress);
+   // console.log('convertedBechAddress : ', convertedBechAddress);
     
-    console.log('type convertedBechAddress ', typeof convertedBechAddress);
+  //  console.log('type convertedBechAddress ', typeof convertedBechAddress);
     console.log('type recipientAddress ', typeof recipientAddress);
     
     // Get Minimum Gas Price from blockchain
