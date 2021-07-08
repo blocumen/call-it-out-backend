@@ -106,6 +106,22 @@ module.exports = {
       });
     }
   },
+
+  getAllPosts : () => {
+   try {
+      let allPosts;
+      allPosts = await Post.find({});
+      res.json({
+        status : true,
+        posts :  allPosts
+      })
+   }catch(err){
+      res.json({
+        status : false,
+        error : err
+      })
+   }
+  };
   getAllPendingPost: async (req, res) => {
     try {
       let allPosts;
