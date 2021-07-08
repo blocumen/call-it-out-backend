@@ -107,7 +107,7 @@ module.exports = {
     }
   },
 
-  getAllPosts : () => {
+  getAllPosts : async(req,res) => {
    try {
       let allPosts;
       allPosts = await Post.find({});
@@ -121,7 +121,7 @@ module.exports = {
         error : err
       })
    }
-  };
+  },
   getAllPendingPost: async (req, res) => {
     try {
       let allPosts;
