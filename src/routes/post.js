@@ -10,11 +10,11 @@ router.get("/getPostByTwitterId/:tweetId",postController.getPostByTweetId); //Ne
 router.get("/getAllPostsModerator",postController.getAllPostsModerator); //New t
 router.get("/getAllPostsUser/:userId",postController.getAllPostsUser); //New t
 router.get("/dashboardPostPending",postController.getAllPendingPost); // New t
-router.get("/getHandleReputation",postController.getHandleReputation); //New
+router.get("/getHandleReputation",postController.getHandleReputation); //New Pause
 router.get("/getReputationPointsOfModerator/:moderatorId",postController.getReputationPointsOfModerator); //New
 router.post("/createPostTweet" , postController.createTweetPost);
 router.get("/getUser",requireSignin,postController.getUser);
-router.post("/giveRating",postController.giveRating);//New
+router.post("/giveRating",postController.giveRating); //New
 
 
 

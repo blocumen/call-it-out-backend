@@ -31,6 +31,9 @@ userId: {
   proofLink : {
     type : String
   },
+  proofText : {
+    type : String
+  },
    ratings : [{
     type : ObjectId,
     ref  : "Rating"

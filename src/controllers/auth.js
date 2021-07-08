@@ -4,7 +4,7 @@ const expressJwt = require("express-jwt");
 require("dotenv").config();
 
 const User = require("../models/user");
-const oauthCallback=process.env.FRONTEND_URL || 'https://sour-robin-67.loca.lt';
+const oauthCallback=process.env.FRONTEND_URL || 'https://tame-zebra-5.loca.lt';
 const oauth = require('../lib/oauth-promise')(oauthCallback);
 const COOKIE_NAME = 'oauth_token';
 let tokens = {};
@@ -135,6 +135,7 @@ module.exports = {
        let twitterData = JSON.parse(response.data);
       if(twitterData){
          let user = await User.findOne({twitterUserId : twitterData.id_str});
+         console.log(user)
          if(!user){
            let object = {};
            object.firstName = twitterData.name.split(" ")[0];

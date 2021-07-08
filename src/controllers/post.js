@@ -256,9 +256,11 @@ module.exports = {
         console.log("saveRating : ", saveRating);
         var postUpdate = await Post.findOneAndUpdate(
           { _id: req.body.postId },
-          { $push: { ratings: saveRating._id,moderatedBy : req.query.moderatorId } }
+          { $push: { ratings: saveRating._id, moderatedBy: req.query.moderatorId} },
+          console.log(req.body.postId)
         );
         console.log("save rating data : done");
+        
       }
 
       if (saveRating && postUpdate) {
@@ -266,6 +268,7 @@ module.exports = {
           status: true,
           rating: saveRating,
         });
+        
       }
     } catch (err) {
       res.status(400).json({
