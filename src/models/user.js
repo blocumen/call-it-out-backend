@@ -42,10 +42,10 @@ const userSchema = new mongoose.Schema({
   twitterHandleName : {
   type : String
   },
-  // publicKey : {
-  //   type : String,
-  //   required : true
-  // },
+  publicKey : {
+    type : String
+    //required : true
+  },
   reputationPoints : {
       type : Number,
       default : 0
