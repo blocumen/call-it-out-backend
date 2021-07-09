@@ -107,8 +107,10 @@ module.exports = {
     }
   },
 
-  getAllPosts : async(req,res) => {
+  getAllPosts : async (req,res) => {
+    console.log("111")
    try {
+     console.log("112")
       let allPosts;
       allPosts = await Post.find({});
       res.json({

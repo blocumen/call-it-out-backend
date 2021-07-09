@@ -12,7 +12,7 @@ router.get("/getAllPostsUser/:userId",postController.getAllPostsUser); //New t
 router.get("/dashboardPostPending",postController.getAllPendingPost); // New t
 router.get("/getHandleReputation",postController.getHandleReputation); //New Pause
 router.get("/getReputationPointsOfModerator/:moderatorId",postController.getReputationPointsOfModerator); //New
-router.get("/getAllPost",postController.getAllPosts); // New
+router.get("/getAllPosts",postController.getAllPosts); // New
 router.post("/createPostTweet" , postController.createTweetPost);
 router.get("/getUser",requireSignin,postController.getUser);
 router.post("/giveRating",postController.giveRating); //New
