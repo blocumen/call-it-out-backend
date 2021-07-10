@@ -36,19 +36,16 @@ const userSchema = new mongoose.Schema({
     type : String,
     default : 'user'
   },
-  role : { 
-    type : String,
-  },
  twitterUserId : {
     type : String
   },
   twitterHandleName : {
   type : String
   },
-  // publicKey : {
-  //   type : String,
-  //   required : true
-  // },
+  publicKey : {
+    type : String
+    //required : true
+  },
   reputationPoints : {
       type : Number,
       default : 0

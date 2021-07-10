@@ -4,6 +4,7 @@ const async = require("async");
 const User = require("../models/user");
 const Post = require("../models/post");
 const Rating = require("../models/rating");
+const { getState } = require("../interaction/reputations");
 
 module.exports = {
   createPost: async (req, res) => {
@@ -105,6 +106,22 @@ module.exports = {
         error: err,
       });
     }
+  },
+
+  getAllPosts : async(req,res) => {
+   try {
+      let allPosts;
+      allPosts = await Post.find({});
+      res.json({
+        status : true,
+        posts :  allPosts
+      })
+   }catch(err){
+      res.json({
+        status : false,
+        error : err
+      })
+   }
   },
   getAllPendingPost: async (req, res) => {
     try {
@@ -256,9 +273,11 @@ module.exports = {
         console.log("saveRating : ", saveRating);
         var postUpdate = await Post.findOneAndUpdate(
           { _id: req.body.postId },
-          { $push: { ratings: saveRating._id,moderatedBy : req.query.moderatorId } }
+          { $push: { ratings: saveRating._id, moderatedBy: req.query.moderatorId} },
+          console.log(req.body.postId)
         );
         console.log("save rating data : done");
+        
       }
 
       if (saveRating && postUpdate) {
@@ -266,6 +285,7 @@ module.exports = {
           status: true,
           rating: saveRating,
         });
+        
       }
     } catch (err) {
       res.status(400).json({
@@ -274,4 +294,20 @@ module.exports = {
       });
     }
   },
+
+  getBalance: async(req,res) => {
+   try{
+      let publicKey =  "zil1wpj09q84qy09jlksvvu4jphwakftlj3nspm5zd";
+       let balance = await getState(publicKey);
+       res.json({
+         status : true,
+         balance : balance
+       })
+   }catch(err){
+     res.status(400).json({
+       status : false,
+       error : err
+     })
+   }
+  }
 };
