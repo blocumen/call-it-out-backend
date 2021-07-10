@@ -4,6 +4,7 @@ const async = require("async");
 const User = require("../models/user");
 const Post = require("../models/post");
 const Rating = require("../models/rating");
+const { getState } = require("../interaction/reputations");
 
 module.exports = {
   createPost: async (req, res) => {
@@ -295,4 +296,20 @@ module.exports = {
       });
     }
   },
+
+  getBalance: async(req,res) => {
+   try{
+      let publicKey =  "zil1wpj09q84qy09jlksvvu4jphwakftlj3nspm5zd";
+       let balance = await getState(publicKey);
+       res.json({
+         status : true,
+         balance : balance
+       })
+   }catch(err){
+     res.status(400).json({
+       status : false,
+       error : err
+     })
+   }
+  }
 };
