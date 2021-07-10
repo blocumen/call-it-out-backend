@@ -3,7 +3,7 @@ const { BN, Long, bytes, units } = require('@zilliqa-js/util');
 const { toBech32Address, fromBech32Address } = require('@zilliqa-js/crypto');
 
 //You can set the value of the following variables according to your liking
-let contractAddress = "0x4e38fa964533e2c23e7247112e28f88161a45bb8"; // toBechAddress : zil1fcu049j9x03vy0njgugju28cs9s6gkach57zcc
+let contractAddress = "0x612ea707063a20e736e4af58f26c4e57f245026f"; // toBechAddress : zil1vyh2wpcx8gswwdhy4av0ymzw2ley2qn0e0zr0h
 let privateKey = "3ddf47aff62044916ea19f62d1bc480d52ccbf8cf35cd8dd8aa0039dade5cced";
 const zilliqa = new Zilliqa('https://dev-api.zilliqa.com');
                               
