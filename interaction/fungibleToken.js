@@ -99,7 +99,8 @@ async function transfer(recipientAddress, sendingAmount) {
 
 async function transferFrom(fromAddress, toAddress, sendingAmount) {
   try {
-    recipientAddress = fromBech32Address(recipientAddress); //converting to ByStr20 format
+    toAddress = fromBech32Address(toAddress); //converting to ByStr20 format
+    fromAddress = fromBech32Address(fromAddress); //converting to ByStr20 format
     //  console.log('tobech address: ', toBech32Address(nonBechAddress));
     //  const convertedBechAddress = toBech32Address(nonBechAddress);
     // console.log('convertedBechAddress : ', convertedBechAddress);
