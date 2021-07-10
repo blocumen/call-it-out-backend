@@ -4,7 +4,7 @@ const async = require("async");
 const User = require("../models/user");
 const Post = require("../models/post");
 const Rating = require("../models/rating");
-const { getState } = require("../interaction/reputations");
+const { getState } = require("../../interaction/reputations");
 
 module.exports = {
   createPost: async (req, res) => {
