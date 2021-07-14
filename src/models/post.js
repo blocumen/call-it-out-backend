@@ -25,8 +25,11 @@ userId: {
     type : String
   },
   bounty : {
-    type : Number,
+    type : String,
     default : 0
+  },
+  publicKey : {
+    type : String,
   },
   proofLink : {
     type : String

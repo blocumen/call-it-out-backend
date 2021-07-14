@@ -52,13 +52,15 @@ module.exports = {
               { _id: allPost[i]._id },
               { $set: { result: "positiveStatus", status: "inactive" } }
             );
-            await payAndIncreaseReputation(positiveUser);
+            let bounty = allPost[i].bounty;
+            await payAndIncreaseReputation(positiveUser,bounty);
           } else if (negativeCount > positiveCount) {
             await Post.findOneAndUpdate(
               { _id: allPost[i]._id },
               { $set: { result: "negativeStatus", status: "inactive" } }
             );
-            await payAndIncreaseReputation(negativeUser);
+            let bounty = allPost[i].bounty;
+            await payAndIncreaseReputation(negativeUser,bounty);
           }
         }
       }
@@ -66,9 +68,13 @@ module.exports = {
   },
 };
 
-const payAndIncreaseReputation = async (userList) => {
+const payAndIncreaseReputation = async (userList,bounty) => {
   let publicKey =
     "zil1wpj09q84qy09jlksvvu4jphwakftlj3nspm5zd";
+    let transactionAmount = 50000000000000;
+    let Calc_bounty = parseInt(bounty) * 10**12;
+    transactionAmount = transactionAmount + (Calc_bounty/userList.length); 
+    console.log("transactionAmount----------",transactionAmount);
   for (let k = 0; k < userList.length; k++) {
     let user = await User.findById({ _id: userList[k] });
     let userPoints = user.reputationPoints;
@@ -78,9 +84,11 @@ const payAndIncreaseReputation = async (userList) => {
       { $set: { reputationPoints: newPoints } }
     );
     console.log(updateUser);
-    let transaction = await increaseReputation(user.publicKey,100);
-    console.log(user.publicKey);
+    let transaction = await increaseReputation(publicKey,100);
+   // console.log(user.publicKey);
     console.log("transactionnnnnnnnnn :", transaction);
-    await transfer("zil1wpj09q84qy09jlksvvu4jphwakftlj3nspm5zd", 1000000000000);
+    console.log(transaction);
+   
+    await transfer("zil1wpj09q84qy09jlksvvu4jphwakftlj3nspm5zd", transactionAmount.toString()); //50 fn getting transfer after right validations
   }
 };

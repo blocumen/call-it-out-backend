@@ -5,6 +5,7 @@ const User = require("../models/user");
 const Post = require("../models/post");
 const Rating = require("../models/rating");
 const { getState } = require("../../interaction/reputations");
+const { transferFrom } = require("../../interaction/fungibleToken");
 
 module.exports = {
   createPost: async (req, res) => {
@@ -12,12 +13,16 @@ module.exports = {
     console.log(req);
     try {
       let obj = JSON.parse(JSON.stringify(req.body));
-      console.log(req.body);
+      console.log("bodyyyyyyyyyyyyyyyyyyy",req.body);
       console.log(obj);
       if (obj) {
         let postData = await new Post(obj);
         let savePostData = await postData.save();
+
         if (savePostData) {
+          let Calc_bounty = req.body.bounty * 10**12
+          let transferFrom =  await transferFrom(req.body.publicKey, 'zil1ht7tthyleczj6v8mh6n8pmrf7aelse87raelfm', Calc_bounty);
+          console.log("transferFrom-------",transferFrom);
           res.json({
             status: true,
             post: savePostData,
