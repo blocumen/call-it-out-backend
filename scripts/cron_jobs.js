@@ -12,7 +12,7 @@ module.exports = {
     for (let i = 0; i < allPost.length; i++) {
       if (allPost[i].status == "active") {
         //console.log(allPost[i].createdAt.toString());
-        let newDateObj = moment(allPost[i].createdAt).add(5, "m").toDate();
+        let newDateObj = moment(allPost[i].createdAt).add(2, "m").toDate();
 
         //console.log("newDateObj:" new Date(newDateObj).getTime())
         // console.log(new Date(allPost[i].createdAt.toString()).getTime())

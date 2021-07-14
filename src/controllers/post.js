@@ -13,7 +13,16 @@ module.exports = {
     console.log(req);
     try {
       let obj = JSON.parse(JSON.stringify(req.body));
-      console.log("bodyyyyyyyyyyyyyyyyyyy",req.body);
+      
+      let post = await Post.find({
+        tweetId: req.body.tweetId,
+      });
+      if (post) {
+        return res.json({
+          status: true,
+          mssg: 'this post already exist',
+        });
+      }
       console.log(obj);
       if (obj) {
         let postData = await new Post(obj);
@@ -21,8 +30,9 @@ module.exports = {
 
         if (savePostData) {
           let Calc_bounty = req.body.bounty * 10**12
-          let transferFrom =  await transferFrom(req.body.publicKey, 'zil1ht7tthyleczj6v8mh6n8pmrf7aelse87raelfm', Calc_bounty);
-          console.log("transferFrom-------",transferFrom);
+          console.log(Calc_bounty);
+          await transferFrom(req.body.publicKey, 'zil1ht7tthyleczj6v8mh6n8pmrf7aelse87raelfm', Calc_bounty);
+          console.log("transferFrom-------");
           res.json({
             status: true,
             post: savePostData,

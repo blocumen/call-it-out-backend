@@ -4,7 +4,7 @@ const expressJwt = require("express-jwt");
 require("dotenv").config();
 
 const User = require("../models/user");
-const oauthCallback=process.env.FRONTEND_URL || 'https://quick-panther-11.loca.lt';
+const oauthCallback=process.env.FRONTEND_URL || 'https://short-insect-53.loca.lt';
 const oauth = require('../lib/oauth-promise')(oauthCallback);
 const COOKIE_NAME = 'oauth_token';
 let tokens = {};

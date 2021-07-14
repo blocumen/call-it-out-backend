@@ -98,15 +98,19 @@ async function transfer(recipientAddress, sendingAmount) {
 
 
 async function transferFrom(fromAddress, toAddress, sendingAmount) {
+  console.log("anshul");
+  console.log(toAddress + "  102")
+  console.log("118 "+ fromAddress,  toAddress,  sendingAmount);
   try {
-    toAddress = fromBech32Address(toAddress); //converting to ByStr20 format
+    toAddress = fromBech32Address('zil1ht7tthyleczj6v8mh6n8pmrf7aelse87raelfm'); 
+    console.log(toAddress + "  105")//converting to ByStr20 format
     fromAddress = fromBech32Address(fromAddress); //converting to ByStr20 format
     //  console.log('tobech address: ', toBech32Address(nonBechAddress));
     //  const convertedBechAddress = toBech32Address(nonBechAddress);
     // console.log('convertedBechAddress : ', convertedBechAddress);
 
     //  console.log('type convertedBechAddress ', typeof convertedBechAddress);
-    console.log('type recipientAddress ', typeof recipientAddress);
+    // console.log('type recipientAddress ', typeof recipientAddress);
 
     // Get Minimum Gas Price from blockchain
     const minGasPrice = await zilliqa.blockchain.getMinimumGasPrice();
@@ -131,7 +135,7 @@ async function transferFrom(fromAddress, toAddress, sendingAmount) {
         {
           vname: 'amount',
           type: 'Uint128',
-          value: sendingAmount,
+          value: sendingAmount.toString(),
         }
       ],
       {
@@ -164,3 +168,4 @@ async function transferFrom(fromAddress, toAddress, sendingAmount) {
 
 exports.getState = getState;
 exports.transfer = transfer;
+exports.transferFrom = transferFrom;
